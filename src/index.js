@@ -49,14 +49,14 @@ class Grid extends React.Component{
 }
 
 class Buttons extends React.Component{
-  handleSelect = () =>{
-    this.props.gridSize();
+  handleSelect = (evt) =>{
+    this.props.gridSize(evt);
   }
   render(){
     return(
       <div className="center">
         <ButtonToolbar>
-          <button className="btn btn-default" onClick={this.props.playButtons}>
+          <button className="btn btn-default" onClick={this.props.playButton}>
             Play
           </button>
           <button className="btn btn-default" onClick={this.props.pauseButton}>
@@ -71,8 +71,8 @@ class Buttons extends React.Component{
           <button className="btn btn-default" onClick={this.props.fast}>
             Fast
           </button>
-          <button className="btn btn-default" onClick={this.props.speed}>
-            Speed
+          <button className="btn btn-default" onClick={this.props.seed}>
+            Seed
           </button>
           <DropdownButton 
             title="Grid Size"
@@ -130,6 +130,42 @@ class Main extends React.Component{
   pauseButton = () => {
     clearInterval(this.intervalId)
   }
+
+  slow =() => {
+    this.speed = 1000;
+    this.playButton();
+  }
+
+  fast =() => {
+    this.speed = 100;
+    this.playButton();
+  }
+
+  clear =() => {
+    var grid = Array(this.rows).fill().map(()=> Array(this.cols).fill(false));
+    this.setState({
+      gridFull: grid,
+      generation:0
+    })
+  }
+
+  gridSize = (size) => {
+    switch (size){
+      case "1":
+        this.cols = 20;
+        this.rows = 10;
+      break;
+      case "2":
+        this.cols = 50;
+        this.rows = 30;
+      break;
+      default:
+        this.cols = 70;
+        this.rows = 50;
+    }
+    this.clear();
+  }
+
 
   play = () => {
     let g = this.state.gridFull;
