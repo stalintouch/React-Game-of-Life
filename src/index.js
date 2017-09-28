@@ -1,92 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ButtonToolbar, MenuItem, DropdownButton } from 'react-bootstrap'
+import Grid from './components/grid';
+import Buttons from './components/buttons'
 import './index.css';
 
 
-class Box extends React.Component {
-
-  selectBox = () => {
-    this.props.selectBox(this.props.row, this.props.col)
-  }
-  render(){
-    return(
-      <div className={this.props.boxClass} id={this.props.id} onClick={this.selectBox}>
-        
-      </div>
-    )
-  }
-}
-
-class Grid extends React.Component{
-  render(){
-    const width= (this.props.cols * 14);
-    var rowsArr = [];
-    var boxClass="";
-    for (var i =0; i< this.props.rows; i++){
-      for (var j =0; j< this.props.cols; j++){
-        let boxId = i + "_" + j;
-        boxClass = this.props.gridFull[i][j] ? "box on" : "box off"
-        rowsArr.push(
-          <Box 
-            boxClass = {boxClass}
-            key={boxId}
-            boxId={boxId}
-            row={i}
-            col={j}
-            selectBox={this.props.selectBox}
-          />
-        )
-      }
-    }
-
-    return(
-      <div className="grid" style={{width:width}}>
-        {rowsArr}
-      </div>
-    )
-  }
-}
-
-class Buttons extends React.Component{
-  handleSelect = (evt) =>{
-    this.props.gridSize(evt);
-  }
-  render(){
-    return(
-      <div className="center">
-        <ButtonToolbar>
-          <button className="btn btn-default" onClick={this.props.playButton}>
-            Play
-          </button>
-          <button className="btn btn-default" onClick={this.props.pauseButton}>
-            Pause
-          </button>
-          <button className="btn btn-default" onClick={this.props.clear}>
-            Clear
-          </button>
-          <button className="btn btn-default" onClick={this.props.slow}>
-            Slow
-          </button>
-          <button className="btn btn-default" onClick={this.props.fast}>
-            Fast
-          </button>
-          <button className="btn btn-default" onClick={this.props.seed}>
-            Seed
-          </button>
-          <DropdownButton 
-            title="Grid Size"
-            id="size-menu"
-            onSelect={this.handleSelect}>
-            <MenuItem evenKey="1">20x10</MenuItem>
-            <MenuItem evenKey="2">50x30</MenuItem>
-            <MenuItem evenKey="3">70x50</MenuItem>
-          </DropdownButton>
-        </ButtonToolbar>
-      </div>
-    )
-  } 
-}
 
 class Main extends React.Component{
   constructor(props) {
